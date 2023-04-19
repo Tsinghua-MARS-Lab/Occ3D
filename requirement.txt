@@ -1,0 +1,12 @@
+numpy
+numba
+tqdm
+trimesh
+opencv-python
+open3d
+torch
+protobuf==3.19.6
+scikit-learn==1.1.2
+waymo-open-dataset-tf-2-6-0==1.4.9
+tensorflow==2.6.0
+mmcv-full==1.6.2
