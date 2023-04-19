@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Occ3D: A Large-Scale 3D Occupancy Prediction Benchmark for Autonomous Driving.">
+  <meta name="keywords" content="Occupancy, Autonomous Driving">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Occ3D: A Large-Scale 3D Occupancy Prediction Benchmark for Autonomous Driving</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">Occ3D: A Large-Scale 3D Occupancy Prediction Benchmark for Autonomous Driving</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              Xiaoyu Tian</a><sup>1,†</sup>,</span>
+            <span class="author-block">
+              Tao Jiang</a><sup>1,†</sup>,</span>
+            <span class="author-block">
+              Longfei Yun</a><sup>1,†</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=v-AEFIEAAAAJ&hl=en">Yue Wang</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com.hk/citations?user=nUyTDosAAAAJ&hl=en">Yilun Wang</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=DmahiOYAAAAJ&hl=en">Hang Zhao</a><sup>1</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>IIIS, Tsinghua University</span>
+            <span class="author-block"><sup>2</sup>NVIDIA</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/XX"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/XX"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/Tsinghua-MARS-Lab/Occ3D.git"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://drive.google.com/drive/u/1/folders/1Ec9D4hwtKJG0FA7Xo-HMs7-lASzg4oID"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item seq 000">
+          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/seq000.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item seq 010">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/seq000.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item seq 020">
+          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/seq000.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item seq 050">
+          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/seq000.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item seq 150">
+          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/seq000.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!--  Introduction. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+
+        <br/>
+        <!--/ Interpolating. -->
+
+        <h2 class="title is-3"> Introduction</h2>
+        <div class="content has-text-justified">
+          <p>
+            3D perception is a crucial component in vision-based robotic systems like autonomous driving. One of the most popular visual perception tasks is 3D object detection, which estimates the locations and dimensions of objects defined in a fixed ontology tree.
+            While the outputs are concise 3D bounding boxes that can be used by downstream tasks, their expressiveness is still limited as shown in Figure1:
+            (1) 3D bounding box representation erases the geometric details of objects, eg a bendy bus has two or more sections connected by rotating joints, a construction vehicle has a mechanical arm that protrudes from the main body;
+            (2) rarely seen objects, like trash or tree branch on the streets, are often ignored and not label in existing datasets since object categories cannot be extensively enumerated in the ontology tree.
+          </p>
+
+          <div class="columns is-vcentered interpolation-panel">
+            <div class="column is-30 has-text-centered">
+              <img src="./static/images/Occ3D_teaser.png"
+                   class="interpolation-image"
+                   alt="Interpolate start reference image."/>
+              <p>Figure 1:The Occ3D dataset demonstrates rich semantic and geometric expressiveness. 
+              </p>
+            </div>
+          </div>
+          <!--/ Re-rendering. -->
+          <p>
+            In this work, we define a comprehensive 3D scene understanding task for vision-based autonomous driving, dubbed 3D Occupancy Prediction.
+            3D occupancy prediction jointly estimates the occupancy state and semantic label of every voxel in the scene from multi-view images. 
+            The occupancy state of each voxel can be "free", "occupied", or "unobserved".
+            Having an unobserved label for voxels is crucial in 3D occupancy prediction to account for visibility and exclude unobserved voxels.
+            Semantic labels are estimated for occupied voxels based on their occupancy state.
+            For objects with predefined categories in the dataset, their semantic labels correspond to their respective categories. 
+            Conversely, objects that are not categorized are labeled as General Objects (GO). 
+            Although GOs are seldom encountered, they are essential for perception tasks that require safety considerations since they are typically undetected by 3D object detection with predefined categories.
+          </p>
+
+        </div>
+
+
+        <h3 class="title is-3">The Occ3D Dataset</h3>
+        
+        <!-- Re-rendering. -->
+        <h3 class="title is-4">Dataset Construction Pipeline</h3>
+        <div class="content has-text-justified">
+          <p>
+            Acquiring dense voxel-level annotations for a 3D scene
+            can be challenging and impractical. To address this, we
+            propose a semi-automatic label generation pipeline that utilizes existing labeled 3D perception datasets. 
+          </p>
+
+          <div class="columns is-vcentered interpolation-panel">
+            <div class="column is-30 has-text-centered">
+              <img src="./static/images/dataset_pipeline_v2_.png"
+                   class="interpolation-image"
+                   alt="Interpolate start reference image."/>
+              <p>Figure 2: Our label generation pipeline.</p>
+            </div>
+          </div>
+          <!--/ Re-rendering. -->
+          <p>
+            <b>Data preparation. </b> Our label generation pipeline requires a 3D dataset where each scene contains the following sensor data: 
+            i) a (multi-view) camera image sequence; ii) a 3D LiDAR point cloud sequence; iii) a 3D pose sequence from IMU. 
+            The intrinsic and extrinsic parameters of all the cameras and LiDARs are also required for coordinate transformation and projection. 
+            Additionally, we require human-annotated box-level semantic labels of common objects, and optionally point-level semantic labels. 
+          </p>
+  
+          <p>
+            <b>Point cloud aggregation. </b> 
+            We process dynamic objects and static objects separately. 
+            Points of dynamic objects are transformed and aggregated according to bounding box annotations at each frame and ego poses between different frames.
+            For points of static objects, we simply aggregate them based on ego poses. 
+            Regarding the points in the unannotated frames that are not enclosed by bounding boxes, we use K-Nearest Neighbor to perform major voting to determine their semantic labels. 
+          </p>
+          
+          <p>
+            <b>LiDAR visibility. </b> 
+            Since LiDAR points are sparse, some occupied voxels are not scanned by LiDAR beams, and can be mislabeled as "free". 
+            To avoid this issue, we perform a ray casting operation to determine the visibility of each voxel. 
+            Concretely, we connect each LiDAR point with the sensor origin to form a ray, a voxel is visible if it reflects LiDAR points ("occupied") or is traversed through by a ray ("free"); 
+            Otherwise, it is tagged as "unobserved". 
+          </p>
+  
+          <p>
+            <b>Camera visibility. </b> 
+            Since we focus on a vision-centric task, we further generate a camera visibility mask, indicating whether each voxel is observed in the present multi-camera views.
+            Concretely, for each camera view, we connect each occupied voxel center with the camera center and form a ray. 
+            Along each ray, we set the voxels before and including the first occupied voxel as "observed", and the rest "unobserved".
+            Voxels not scanned by any camera rays are marked as "unobserved" as well.
+          </p>
+
+      </div>
+
+        <!-- Interpolating. -->
+        <h3 class="title is-4">Dataset statistics</h3>
+        <div class="content has-text-justified">
+          <p>
+            Based on the aforementioned semi-automatic annotation pipeline, we generate two 3D occupancy prediction datasets,
+            Occ3D-Waymo and Occ3D-nuScenes.
+          </p>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <div class="column is-30 has-text-centered">
+            <img src="./static/images/Dataset_statistics.png"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/>
+            <p>Table 1: Comparing Occ3D Datasets with other datasets for 3D perception.</p>
+          </div>
+        </div>
+        <br/>
+        <!--/ Interpolating. -->
+
+        <!-- Re-rendering. -->
+        <h3 class="title is-3">Methods</h3>
+        <div class="content has-text-justified">
+          <p>
+            To deal with the challenging 3D occupancy prediction problem, we present a new transformer-based model named Coarse-to-Fine Occupancy (CTF-Occ).
+            First, 2D image features are extracted from multi-view images with an image backbone. Then, 3D voxel
+            queries aggregate 2D image features into 3D space via a
+            cross-attention operation. Our approach involves using a
+            pyramid voxel encoder that progressively improves voxel
+            feature representations through incremental token selection
+            and spatial cross-attention in a coarse-to-fine fashion. This
+            method enhances the spatial resolution and fine-tunes the
+            detailed geometry of objects, ultimately leading to more accurate 3D occupancy predictions.
+          </p>
+
+          <div class="columns is-vcentered interpolation-panel">
+            <div class="column is-30 has-text-centered">
+              <img src="./static/images/occ_overall.png"
+                   class="interpolation-image"
+                   alt="Interpolate start reference image."/>
+              <p>Figure 3: The model architecture of CTF-Occ.</p>
+            </div>
+          </div>
+          <!--/ Re-rendering. -->
+          <p>
+            <b>Incremental Token Selection. </b> 
+            Given that most 3D voxel grids in a scene are empty, we propose an incremental token selection strategy that selectively chooses foreground and uncertain voxel tokens in cross-attention computation. 
+            This strategy enables adaptive and efficient computation without sacrificing accuracy.
+            Specifically, at the beginning of each pyramid level, each voxel token is fed into a binary classifier to predict whether this voxel is empty or not. 
+            We use the binary ground-truth occupancy map as supervision to train the classifier.
+            In our approach, we select either the K-most uncertain voxels, which are those with probabilities near 0.5, 
+            or K non-empty voxels with the highest scores, or we combine both types of voxels with a specific percentage.
+          </p>
+  
+          <p>
+            <b>Spatial Cross Attention. </b> 
+            At every level of the pyramid, we first select the top-K voxel tokens and then aggregate the corresponding image features. 
+            Subsequently, we apply spatial cross-attention to further refine the voxel features.
+          </p>
+
+          <p>
+            <b>Convolutional Feature Extractor. </b> 
+            Once we apply deformable cross-attention to the relevant image features, 
+            we proceed to update the features of the foreground voxel tokens. 
+            Then, we use a series of stacked convolutions to enhance feature interaction throughout the entire 3D voxel feature maps. 
+            At the end of the current level, we upsample the 3D voxel features using trilinear interpolation.
+          </p>
+
+      </div>
+
+        <!-- Interpolating. -->
+        <h3 class="title is-3">Experiments</h3>
+        <div class="content has-text-justified">
+          <p>
+            Our method outperforms previous methods on Occ3D-Waymo dataset, i.e. increasing the mIoU by 3.11. Especially for some small objects such as pedestrians and bicycles, our method surpasses the baseline method by 4.11 and 13.0 IoU respectively.
+          </p>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <div class="column is-30 has-text-centered">
+            <img src="./static/images/exp.png"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/>
+            <p>3D occupancy prediction performance on the Occ3D-nuScenes dataset. C, L denote camera and LiDAR.</p>
+          </div>
+        </div>
+        <br/>
+        <!--/ Interpolating. -->
+
+
+      </div>
+    </div>
+    <!--/ Animation. -->
+
+
+    <!-- Concurrent Work. -->
+    <!-- <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Related Links</h2>
+
+      </div>
+    </div> -->
+    <!--/ Concurrent Work. -->
+
+<!-- <section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{park2021nerfies,
+      author    = {Xiaoyu Tian, BB, CC, DD, EE, FF},
+      title     = {Occ3D: A Large-Scale 3D Occupancy Prediction Benchmark for Autonomous Driving},
+      year      = {2023},
+}</code></pre>
+  </div> -->
+
+<!-- </section> -->
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>. Borrow the template from<a href="https://github.com/nerfies/nerfies.github.io"> HERE </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
