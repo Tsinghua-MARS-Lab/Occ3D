@@ -1,6 +1,6 @@
 # Occ3D
 
-This is the repository that contains source code for the [Occ3D website](https://waveleaf27.github.io/Occ3D.github.io/).
+This is the repository that contains source code for the [Occ3D website](https://tsinghua-mars-lab.github.io/Occ3D/).
 
 
 # Website License
