@@ -19,7 +19,7 @@
   - [Data](#data)
     - [Basic Information](#basic-information)
     - [Occ3D-Waymo](#occ3d-waymo)
-    - [Occ3D-Nuscene](#occ3d-nuscene)
+    - [Occ3D-nuScenes](#occ3d-nuScenes)
   - [Getting Started](#getting-started)
   - [License](#license)
 
@@ -121,7 +121,7 @@ Figure 1. Semantic labels (left), visibility masks in the LiDAR (middle) and the
 
 
 
-### Occ3D-Nuscene
+### Occ3D-nuScenes
 <div align="center">
   
 | Type |  Info |
