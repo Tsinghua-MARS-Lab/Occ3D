@@ -32,7 +32,7 @@
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.svg">
+  <link rel="icon" href="./static/images/MARSLAB.png">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -235,8 +235,12 @@
         <div class="content has-text-justified">
           <p>
             We generate two 3D occupancy prediction datasets, <a href="https://drive.google.com/drive/folders/13WxRl9Zb_AshEwvD96Uwz8cHjRNrtfQk">Occ3D-Waymo</a>
-            and <a href="https://drive.google.com/drive/folders/13WxRl9Zb_AshEwvD96Uwz8cHjRNrtfQk?usp=share_link">Occ3D-nuScenes</a>, statistics are shown below.
-            Checkout our <a href="https://github.com/Tsinghua-MARS-Lab/Occ3D.git">code and toolkit</a> to get started using our datasets.
+            and <a href="https://drive.google.com/drive/folders/13WxRl9Zb_AshEwvD96Uwz8cHjRNrtfQk?usp=share_link">Occ3D-nuScenes</a>.
+            Checkout our <a href="https://github.com/Tsinghua-MARS-Lab/Occ3D.git">code and toolkit</a> to get started using our datasets. 
+            Before using the dataset, you should agree to the terms of use of the
+             <a href="https://www.nuscenes.org/">nuScenes</a> and 
+             <a href="https://waymo.com/open/">Waymo</a>.
+             The code used to generate the data and the generated data are both subject to the <a href="https://en.wikipedia.org/wiki/MIT_License">MIT License</a>.
           </p>
         </div>
         <div class="columns is-vcentered interpolation-panel">
@@ -355,16 +359,19 @@
         <h3 class="title is-3">Experiments</h3>
         <div class="content has-text-justified">
           <p>
-            Our method outperforms previous methods on Occ3D-Waymo dataset, 
-            i.e. increasing the mIoU by 3.11. Especially for some small objects such as pedestrians and bicycles, our method surpasses the baseline method by 4.11 and 13.0 IoU respectively.
+            Our method outperforms previous methods on Occ3D-Nuscenes and Occ3D-Waymo dataset.
           </p>
         </div>
         <div class="columns is-vcentered interpolation-panel">
           <div class="column is-30 has-text-centered">
-            <img src="./static/images/exp.png"
+            <img src="./static/images/Occ3D-nuscene.png"
                  class="interpolation-image"
                  alt="Interpolate start reference image."/>
             <!-- <p>3D occupancy prediction performance on the Occ3D-nuScenes dataset. C, L denote camera and LiDAR.</p>  -->
+            <img src="./static/images/Occ3D-Waymo.png"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/>
+                 <p>Table 2: 3D occupancy prediction performance on the Occ3D-nuScenes and Occ3D-Waymo dataset.</p>
           </div>
         </div>
         <br/>
