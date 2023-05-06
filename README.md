@@ -130,9 +130,9 @@ Figure 1. Semantic labels (left), visibility masks in the LiDAR (middle) and the
 | val             | 150 |
 | test            | 250 |
 | cameras         | 6 |
-| voxel size      | [0.1m, 0.1m, 0.2m] / [0.4m, 0.4m, 0.4m] |
-| range           | [-80m, -80m, -5m, 80m, 80m, 7.8m] / [-40m, -40m, -1m, 40m, 40m, 5.4m] |
-| volume size     | [1600, 1600, 64] / [200, 200, 16]|
+| voxel size      | [0.4m, 0.4m, 0.4m] |
+| range           | [-40m, -40m, -1m, 40m, 40m, 5.4m] |
+| volume size     | [200, 200, 16]|
 | classes        | 0 - 17 |
 </div>
 
