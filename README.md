@@ -25,6 +25,8 @@
 
 
 ## Introduction
+In this work, we define a comprehensive 3D scene understanding task. 
+For more information, please refer to the [Paper](https://arxiv.org/abs/2304.14365) and [Webpage](https://tsinghua-mars-lab.github.io/Occ3D/).
 
 
 
@@ -214,8 +216,7 @@ Figure 1. Semantic labels (left), visibility masks in the LiDAR (middle) and the
 
 
 ## Getting Started
-soon.
-
+We will release the code soon. 
 
 ## License
 Before using the dataset, you should register on the website and agree to the terms of use of the [nuScenes](https://www.nuscenes.org/nuscenes) and [Waymo](https://waymo.com/open/).
