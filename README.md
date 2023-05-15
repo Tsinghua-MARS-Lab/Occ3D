@@ -2,13 +2,16 @@
 
 # Occ3D: A Large-Scale 3D Occupancy Prediction Benchmark for Autonomous Driving
 
+<!-- <p align="center"> -->
+<font size="4">[Paper](https://arxiv.org/abs/2304.14365) | [Webpage](https://tsinghua-mars-lab.github.io/Occ3D/) </font>
+<!-- </p> -->
 
-<a href="#devkit">
+<!-- <a href="#devkit">
   <img alt="devkit: v0.1.0" src="https://img.shields.io/badge/devkit-v0.1.0-blueviolet"/>
 </a>
 <a href="#license">
   <img alt="License: Apache2.0" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg"/>
-</a>
+</a> -->
 
 <!-- <img src="./figs/occupanc_1.gif" width="696px"> -->
 
@@ -25,10 +28,8 @@
 
 
 ## Introduction
-In this work, we define a comprehensive 3D scene understanding task. 
-For more information, please refer to the [Paper](https://arxiv.org/abs/2304.14365) and [Webpage](https://tsinghua-mars-lab.github.io/Occ3D/).
-
-
+This paper propose 3D Occupancy Prediction, a general and comprehensive 3D perception task for vision-based robotic applications. Occupancy prediction can represent both the semantics and geometry of any scene effectively.
+We develop a rigorous label generation pipeline for occupancy prediction, construct two challenging datasets (Occ3D-Waymo and Occ3d-nuScenes) and establish a benchmark together with evaluation metrics to facilitate future research. In addition, we propose a novel CTF-Occ network that achieves outstanding occupancy prediction performance. For more information, please refer to the [Paper](https://arxiv.org/abs/2304.14365).
 
 
 ## Data
@@ -217,6 +218,17 @@ Figure 1. Semantic labels (left), visibility masks in the LiDAR (middle) and the
 
 ## Getting Started
 We will release the code soon. 
+
+## Citation
+If you find our work useful for your research, please consider citing the paper:
+```bash
+@article{tian2023occ3d,
+  title={Occ3D: A Large-Scale 3D Occupancy Prediction Benchmark for Autonomous Driving},
+  author={Tian, Xiaoyu and Jiang, Tao and Yun, Longfei and Wang, Yue and Wang, Yilun and Zhao, Hang},
+  journal={arXiv preprint arXiv:2304.14365},
+  year={2023}
+}
+```
 
 ## License
 Before using the dataset, you should register on the website and agree to the terms of use of the [nuScenes](https://www.nuscenes.org/nuscenes) and [Waymo](https://waymo.com/open/).
