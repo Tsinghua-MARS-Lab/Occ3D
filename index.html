@@ -55,7 +55,11 @@
             <span class="author-block">
               Tao Jiang</a><sup>1,†</sup>,</span>
             <span class="author-block">
-              Longfei Yun</a><sup>1,†</sup>,
+              Longfei Yun</a><sup>1</sup>,</span>
+            <span class="author-block">
+              Yucheng Mao</a><sup>1</sup>,</span>
+            <span class="author-block">
+              Huitong Yang</a><sup>1</sup>
             </span>
             <span class="author-block">
               <a href="https://scholar.google.com/citations?user=v-AEFIEAAAAJ&hl=en">Yue Wang</a><sup>2</sup>,
@@ -196,12 +200,9 @@
           </div>
           <!--/ Re-rendering. -->
           <p>
-            In this work, we define a comprehensive 3D scene understanding task, dubbed 3D Occupancy Prediction.
-            3D occupancy prediction jointly estimates the occupancy state and semantic label of every voxel in the scene from multi-view images. 
-            The occupancy state of each voxel can be "free", "occupied", or "unobserved".
-            Semantic labels are estimated for occupied voxels based on their occupancy state.
-            For objects with predefined categories in the dataset, their semantic labels correspond to their respective categories. 
-            Conversely, objects that are not categorized are labeled as General Objects (GO). 
+            We formalize the 3D occupancy prediction task as follows: a model needs to jointly estimate the occupancy state and semantic label of every voxel in the scene from images. 
+            The occupancy state of each voxel can be categorized as free, occupied, or unobserved. 
+            For occupied voxels, semantic labels are assigned. For objects that are not in the predefined categories, they are labeled as General Objects (GOs).
           </p>
 
         </div>
@@ -236,7 +237,7 @@
         </div>
         <div class="columns is-vcentered interpolation-panel">
           <div class="column is-30 has-text-centered">
-            <img src="./static/images/Dataset_statistics.png"
+            <img src="./static/images/Dataset_new_statics.png"
                  class="interpolation-image"
                  alt="Interpolate start reference image."/>
             <p>Table 1: Comparing Occ3D Datasets with other datasets for 3D perception.</p>
@@ -257,7 +258,7 @@
 
           <div class="columns is-vcentered interpolation-panel">
             <div class="column is-30 has-text-centered">
-              <img src="./static/images/dataset_pipeline_v2_.png"
+              <img src="./static/images/pipeline_v3.pdf"
                    class="interpolation-image"
                    alt="Interpolate start reference image."/>
               <p>Figure 2: Our label generation pipeline.</p>
@@ -265,34 +266,31 @@
           </div>
           <!--/ Re-rendering. -->
           <p>
-            <b>Data preparation. </b> Our label generation pipeline requires the following sensor data: 
-            i) a (multi-view) camera image sequence; ii) a 3D LiDAR point cloud sequence; iii) a 3D pose sequence from IMU. 
-            iv) the intrinsic and extrinsic parameters of all the cameras and LiDARs. 
-            Additionally, we require human-annotated box-level semantic labels of common objects, and optionally point-level semantic labels. 
+            Our proposed label generation pipeline addresses the above challenges, an overview is shown in Figure 2. Initially, in voxel densification, we increase the density of the point clouds by performing multi-frame aggregation for both static and dynamic objects separately. Then we employ a K-nearest neighbor algorithm to assign labels to unlabeled points and utilize mesh reconstruction to perform hole-filling. 
+            Subsequently, we carry out occlusion reasoning from both LiDAR and camera perspectives, utilizing a ray-casting operation to label the occupancy state of each voxel. Finally, misaligned voxels are eliminated through an image-guided voxel refinement process.
           </p>
-  
+        </div>
+      
+
+        <h3 class="title is-4">Quality Check</h3>
+        <div class="content has-text-justified">
           <p>
-            <b>Point cloud aggregation. </b> 
-            We process dynamic objects and static objects separately. 
-            Points of dynamic objects are transformed and aggregated according to bounding box annotations at each frame and ego poses between different frames.
-            For points of static objects, we simply aggregate them based on ego poses. 
-            Regarding the points in the unannotated frames that are not enclosed by bounding boxes, we use K-Nearest Neighbor to perform major voting to determine their semantic labels. 
+            Acquiring an occupancy representation that adheres to the complete shape of all objects is challenging.
+            Therefore, evaluating the quality of the dataset and ensuring the effectiveness of each step in our pipeline is critical. 
           </p>
+
+          <div class="columns is-vcentered interpolation-panel">
+            <div class="column is-30 has-text-centered">
+              <img src="./static/images/quality_check.png"
+                    class="interpolation-image"
+                    alt="Interpolate start reference image."/>
+              <p>Figure 3: 3D-2D consistency.</p>
+            </div>
+          </div>
           
           <p>
-            <b>LiDAR visibility. </b> 
-            Since LiDAR points are sparse, some occupied voxels are not scanned by LiDAR beams, and can be mislabeled as "free". 
-            To avoid this issue, we perform a ray casting operation to determine the visibility of each voxel. 
-            Concretely, we connect each LiDAR point with the sensor origin to form a ray, a voxel is visible if it reflects LiDAR points ("occupied") or is traversed through by a ray ("free"); 
-            Otherwise, it is tagged as "unobserved". 
-          </p>
-  
-          <p>
-            <b>Camera visibility. </b> 
-            Since we focus on a vision-centric task, we further generate a camera visibility mask, indicating whether each voxel is observed in the present multi-camera views.
-            Concretely, for each camera view, we connect each occupied voxel center with the camera center and form a ray. 
-            Along each ray, we set the voxels before and including the first occupied voxel as "observed", and the rest "unobserved".
-            Voxels not scanned by any camera rays are marked as "unobserved" as well.
+            Our proposed label generation pipeline addresses the above challenges, an overview is shown in Figure 2. Initially, in voxel densification, we increase the density of the point clouds by performing multi-frame aggregation for both static and dynamic objects separately. Then we employ a K-nearest neighbor algorithm to assign labels to unlabeled points and utilize mesh reconstruction to perform hole-filling. 
+            Subsequently, we carry out occlusion reasoning from both LiDAR and camera perspectives, utilizing a ray-casting operation to label the occupancy state of each voxel. Finally, misaligned voxels are eliminated through an image-guided voxel refinement process.
           </p>
 
       </div>
@@ -322,27 +320,8 @@
           </div>
           <!--/ Re-rendering. -->
           <p>
-            <b>Incremental Token Selection. </b> 
-            Given that most 3D voxel grids in a scene are empty, we propose an incremental token selection strategy that selectively chooses foreground and uncertain voxel tokens in cross-attention computation. 
-            This strategy enables adaptive and efficient computation without sacrificing accuracy.
-            Specifically, at the beginning of each pyramid level, each voxel token is fed into a binary classifier to predict whether this voxel is empty or not. 
-            We use the binary ground-truth occupancy map as supervision to train the classifier.
-            In our approach, we select either the K-most uncertain voxels, which are those with probabilities near 0.5, 
-            or K non-empty voxels with the highest scores, or we combine both types of voxels with a specific percentage.
-          </p>
-  
-          <p>
-            <b>Spatial Cross Attention. </b> 
-            At every level of the pyramid, we first select the top-K voxel tokens and then aggregate the corresponding image features. 
-            Subsequently, we apply spatial cross-attention to further refine the voxel features.
-          </p>
-
-          <p>
-            <b>Convolutional Feature Extractor. </b> 
-            Once we apply deformable cross-attention to the relevant image features, 
-            we proceed to update the features of the foreground voxel tokens. 
-            Then, we use a series of stacked convolutions to enhance feature interaction throughout the entire 3D voxel feature maps. 
-            At the end of the current level, we upsample the 3D voxel features using trilinear interpolation.
+            An overview of CTF-Occ network is shown in Figure 3. First, 2D image features are extracted from multi-view images with an image backbone.
+            Then, 3D voxel queries aggregate 2D image features into 3D space via a cross-attention operation.
           </p>
 
       </div>
@@ -355,14 +334,15 @@
         </div>
         <div class="columns is-vcentered interpolation-panel">
           <div class="column is-30 has-text-centered">
-            <img src="./static/images/Occ3D-nuscene.png"
+            <img src="./static/images/Occ3D-nuscenes_new.png"
                  class="interpolation-image"
                  alt="Interpolate start reference image."/>
             <!-- <p>3D occupancy prediction performance on the Occ3D-nuScenes dataset. C, L denote camera and LiDAR.</p>  -->
-            <img src="./static/images/Occ3D-Waymo.png"
+            <img src="./static/images/Occ3D-Waymo_new.png"
                  class="interpolation-image"
                  alt="Interpolate start reference image."/>
-                 <p>Table 2: 3D occupancy prediction performance on the Occ3D-nuScenes and Occ3D-Waymo dataset.</p>
+                 <p>Table 2: 3D occupancy prediction performance on the Occ3D-nuScenes and Occ3D-Waymo dataset. Cons. Veh represents
+                  construction vehicle and Dri. Sur is for driveable surface.</p>
           </div>
         </div>
         <br/>
