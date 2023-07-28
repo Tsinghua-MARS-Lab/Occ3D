@@ -1,0 +1,46 @@
+# eval
+## single machine
+```sh
+./tools/dist_test.sh projects/configs/bevformer/bevformer_base_occ_waymo.py work_dirs/bevformer_base_occ_waymo/latest.pth 8 --eval mIoU
+```
+## multi machine
+```sh
+GPUS=8 ./tools/slurm_test.sh brie1 test projects/configs/bevformer/bevformer_base_occ_waymo.py work_dirs/bevformer_base_occ_waymo/latest.pth --eval mIoU
+```
+
+# save results
+```sh
+./tools/dist_test.sh projects/configs/bevformer/bevformer_base_occ_waymo.py work_dirs/bevformer_base_occ_waymo/latest.pth 8 --out work_dirs/bevformer_base_occ_waymo/results.pkl
+```
+
+# train
+## single GPU
+```sh
+./tools/dist_train.sh projects/configs/bevformer/bevformer_base_occ_waymo.py 1
+```
+## single machine
+```sh
+./tools/dist_train.sh projects/configs/bevformer/bevformer_base_occ_waymo.py 8
+```
+## multi machine
+```sh
+NNODES=4 NODE_RANK=0 PORT=2850 MASTER_ADDR=10.200.5.154 ./tools/my_dist_train.sh projects/configs/bevformer/bevformer_base_occ_conv3d_waymo.py 8
+```
+or
+```sh
+GPUS=32 ./tools/slurm_train.sh brie1 test projects/configs/bevformer/bevformer_base_occ_conv3d_waymo.py
+```
+
+# vis
+./tools/dist_test.sh projects/configs/bevformer/bevformer_base_occ_waymo.py work_dirs/bevformer_base_occ_waymo/epoch_5.pth 8 --eval mAP
+amend projects/mmdet3d_plugin/bevformer/detectors/occformer_waymo.py
+    DEBUG=True
+    print('output',type(occ_results),type(voxel_semantics[0]),type(img_metas[0]))
+    save_root = '/home/txy/bev-occ/work_dirs/bevformer_base_occ_waymo/results/'
+
+python vis_preds.py
+
+# eval waymo
+python tools/eval_waymo.py
+# eval nuscene
+python tools/eval.py
