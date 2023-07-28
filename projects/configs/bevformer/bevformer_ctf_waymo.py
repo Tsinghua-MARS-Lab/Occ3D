@@ -25,15 +25,13 @@ class_weight_multiclass = [
     9.861234292376812, 13.64431851057796, 15.121236434460473, 21.996729830048952, 6.201671013759701, 
     5.7420517938838325, 9.768712859518626, 3.4607400626606317, 4.152268220983671, 1.000000000000000,
 ]
-pose_file = 'dataset//waymo_v1.4.0/cam_infos.pkl'
-data_root='dataset//waymo_v1.3.1_untar/kitti_format/'
-occ_gt_data_root='dataset//waymo_v1.4.0/voxel_go/'
-val_pose_file='/public/MARS/datasets/waymo_v1.4.0/cam_infos_vali.pkl'
-occ_val_gt_data_root='/public/MARS/datasets/waymo_v1.4.0/voxel_go_vali'
+pose_file = 'data/occ3d-waymo/cam_infos.pkl'
+data_root='data/occ3d-waymo/kitti_format/'
+occ_gt_data_root='data/occ3d-waymo/voxel04/training/'
+val_pose_file='data/occ3d-waymo/cam_infos_vali.pkl'
+occ_val_gt_data_root='data/occ3d-waymo/voxel04/validation/'
 
-# pose_file='/mnt/petrelfs/zhaohang.p/waymo_occ_gt/cam_infos.pkl'
-# data_root='/mnt/petrelfs/zhaohang.p/mmdetection/data/waymo/kitti_format/'
-# occ_gt_data_root='/mnt/petrelfs/zhaohang.p/waymo_occ_gt/voxel_gt'
+
 
 input_modality = dict(
     use_lidar=False,
@@ -92,18 +90,8 @@ model = dict(
         sync_cls_avg_factor=True,
         with_box_refine=True,
         as_two_stage=False,
-        # loss_occ=dict(
-        #     type='FocalLoss',
-        #     use_sigmoid=False,
-        #     gamma=2.0,
-        #     alpha=0.25,
-        #     loss_weight=10.0),
         use_lidar_mask=False,
         use_camera_mask=False,
-        # loss_occ= dict(
-        #     type='CrossEntropyLoss',
-        #     use_sigmoid=False,
-        #     loss_weight=1.0),
         loss_occ=dict(
             ceohem=dict(
                 type='CrossEntropyOHEMLoss',
@@ -113,14 +101,6 @@ model = dict(
                 loss_weight=1.0, 
                 top_ratio=0.2,
                 top_weight=4.0),
-            # lovasz=dict(
-            #     type='LovaszLoss',
-            #     class_weight=class_weight_multiclass,
-            #     loss_type='multi_class',
-            #     classes='present',
-            #     per_image=False,
-            #     reduction='none',
-            #     loss_weight=1.0)
         ),
         loss_binary_occ=dict(
             ceohem=dict(
@@ -131,14 +111,6 @@ model = dict(
                 loss_weight=1.0, 
                 top_ratio=0.2,
                 top_weight=4.0),
-            # lovasz=dict(
-            #     type='LovaszLoss',
-            #     class_weight=class_weight_binary,
-            #     loss_type='multi_class',
-            #     classes='present',
-            #     per_image=False,
-            #     reduction='none',
-            #     loss_weight=1.0)
         ),
         transformer=dict(
             type='OccTransformerWaymo',
@@ -376,14 +348,6 @@ train_pipeline = [
     dict(type='CustomCollect3DWaymo', keys=['gt_bboxes_3d', 'gt_labels_3d', 'img','voxel_semantics','mask_lidar','mask_camera'] )
 ]
 
-# test_pipeline = [
-#     dict(type='LoadMultiViewImageFromFiles', to_float32=True),
-#     dict(type='LoadOccGTFromFile', data_root=occ_gt_data_root),
-#     dict(type='PhotoMetricDistortionMultiViewImage'),
-#     dict(type='NormalizeMultiviewImage', **img_norm_cfg),
-#     dict(type='PadMultiViewImage', size_divisor=32),
-#     dict(type='CustomCollect3D', keys=[ 'img', 'voxel_semantics','mask_camera'])
-# ]
 
 
 test_pipeline = [

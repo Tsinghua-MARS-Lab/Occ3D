@@ -18,26 +18,11 @@ class_names = [
     'motorcycle', 'bicycle', 'pedestrian', 'traffic_cone'
 ]
 
-# pujiang
-# pose_file='/mnt/petrelfs/zhaohang.p/dataset/waymo_occV2/cam_infos.pkl'
-# data_root='/mnt/petrelfs/zhaohang.p/mmdetection/data/waymo/kitti_format/'
-# occ_gt_data_root='/mnt/petrelfs/zhaohang.p/dataset/waymo_occV2/voxel04/training/'
-# val_pose_file='/mnt/petrelfs/zhaohang.p/waymo_occ_gt/cam_infos_vali.pkl'
-# occ_val_gt_data_root='/mnt/petrelfs/zhaohang.p/dataset/waymo_occV2/voxel04/validation/'
-
-# local ssd
-# pose_file = '/localdata_ssd/MARS/datasets/waymo_v1.4.0/cam_infos.pkl' 
-# data_root='/localdata_ssd/MARS/datasets/waymo_v1.3.1_untar/kitti_format/' 
-# occ_gt_data_root='/localdata_ssd/MARS/datasets/waymo_v1.4.0/voxel_go/'
-# val_pose_file='/localdata_ssd/MARS/datasets/waymo_v1.4.0/cam_infos_vali.pkl'
-# occ_val_gt_data_root='/localdata_ssd/MARS/datasets/waymo_v1.4.0/voxel_go_vali'
-
-# local home
-pose_file = '/public/MARS/datasets/waymo_occV2/cam_infos.pkl'
-data_root='/public/MARS/datasets/waymo_v1.3.1_untar/kitti_format/'
-occ_gt_data_root='/public/MARS/datasets/waymo_occV2/voxel04/training/'
-val_pose_file='/public/MARS/datasets/waymo_occV2/cam_infos_vali.pkl'
-occ_val_gt_data_root='/public/MARS/datasets/waymo_occV2/voxel04/validation/'
+pose_file = 'data/occ3d-waymo/cam_infos.pkl'
+data_root='data/occ3d-waymo/kitti_format/'
+occ_gt_data_root='data/occ3d-waymo/voxel04/training/'
+val_pose_file='data/occ3d-waymo/cam_infos_vali.pkl'
+occ_val_gt_data_root='data/occ3d-waymo/voxel04/validation/'
 
 input_modality = dict(
     use_lidar=False,
@@ -86,10 +71,6 @@ model = dict(
         style='caffe',
         dcn=dict(type='DCNv2', deform_groups=1, fallback_on_stride=False),
         stage_with_dcn=(False, False, True, True)),
-    # clip_backbone=dict(
-    #     config_file='projects/SAN/configs/san_clip_vit_large_res4_coco.yaml',
-    #     model_path='projects/SAN/output/san_vit_large_14.pth',
-    # ), # ATTENTION: DISABLE NormalizeMultiviewImage
     img_neck=dict(
         type='FPN',
         in_channels=[512, 1024, 2048],
@@ -110,19 +91,9 @@ model = dict(
         sync_cls_avg_factor=True,
         with_box_refine=True,
         as_two_stage=False,
-        # loss_occ=dict(
-        #     type='FocalLoss',
-        #     use_sigmoid=False,
-        #     gamma=2.0,
-        #     alpha=0.25,
-        #     loss_weight=10.0),
         use_infov_mask=True,
         use_lidar_mask=False,
         use_camera_mask=True,
-        # loss_occ= dict(
-        #     type='CrossEntropyLoss',
-        #     use_sigmoid=False,
-        #     loss_weight=1.0),
         loss_occ=dict(
             ceohem=dict(
                 type='CrossEntropyOHEMLoss',
@@ -132,14 +103,6 @@ model = dict(
                 loss_weight=1.0, 
                 top_ratio=0.2,
                 top_weight=4.0),
-            # lovasz=dict(
-            #     type='LovaszLoss',
-            #     class_weight=class_weight_multiclass,
-            #     loss_type='multi_class',
-            #     classes='present',
-            #     per_image=False,
-            #     reduction='none',
-            #     loss_weight=1.0)
         ),
         transformer=dict(
             type='OccTransformerWaymo',
@@ -240,32 +203,22 @@ file_client_args = dict(backend='disk')
 train_pipeline = [
     dict(type='MyLoadMultiViewImageFromFiles', to_float32=True, img_scale=(1280, 1920)),
     dict(type='LoadOccGTFromFileWaymo',data_root=occ_gt_data_root,use_larger=True, crop_x=False), # TODO use fov mask not crop
-    # dict(type='PhotoMetricDistortionMultiViewImage'),
     dict(type='RandomScaleImageMultiViewImage', scales=[0.5]),
     dict(type='LoadAnnotations3D', with_bbox_3d=True, with_label_3d=True, with_attr_label=False),
     dict(type='ObjectRangeFilter', point_cloud_range=point_cloud_range),
     dict(type='ObjectNameFilter', classes=class_names),
-    # dict(type='NormalizeMultiviewImage', **img_norm_cfg),
     dict(type='PadMultiViewImage', size_divisor=32),
     dict(type='DefaultFormatBundle3D', class_names=class_names),
     dict(type='CustomCollect3DWaymo', keys=['gt_bboxes_3d', 'gt_labels_3d', 'img','voxel_semantics', 'mask_infov', 'mask_lidar','mask_camera'] )
 ]
 
-# test_pipeline = [
-#     dict(type='LoadMultiViewImageFromFiles', to_float32=True),
-#     dict(type='LoadOccGTFromFile', data_root=occ_gt_data_root),
-#     # dict(type='PhotoMetricDistortionMultiViewImage'),
-#     # dict(type='NormalizeMultiviewImage', **img_norm_cfg),
-#     dict(type='PadMultiViewImage', size_divisor=32),
-#     dict(type='CustomCollect3D', keys=[ 'img', 'voxel_semantics','mask_camera'])
-# ]
+
 
 
 test_pipeline = [
     dict(type='MyLoadMultiViewImageFromFiles', to_float32=True, img_scale=(1280, 1920)),
     dict(type='LoadOccGTFromFileWaymo',data_root=occ_val_gt_data_root,use_larger=True, crop_x=False),
     dict(type='RandomScaleImageMultiViewImage', scales=[0.5]),
-    # dict(type='NormalizeMultiviewImage', **img_norm_cfg),
     dict(type='PadMultiViewImage', size_divisor=32),
     dict(
         type='MultiScaleFlipAug3D',

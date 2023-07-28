@@ -45,8 +45,6 @@ class NuSceneOcc(NuScenesDataset):
             list[dict]: List of annotations sorted by timestamps.
         """
         data = mmcv.load(ann_file)
-        # self.train_split=data['train_split']
-        # self.val_split=data['val_split']
         data_infos = list(sorted(data['infos'], key=lambda e: e['timestamp']))
         data_infos = data_infos[::self.load_interval]
         self.metadata = data['metadata']
@@ -233,8 +231,8 @@ class NuSceneOcc(NuScenesDataset):
             if self.eval_fscore:
                 self.fscore_eval_metrics.add_batch(occ_pred,gt_semantics,mask_lidar,mask_camera)
 
-        self.occ_eval_metrics.count_miou()
-        print()
+        self.occ_eval_metrics.print()
+        # print()
         if self.eval_fscore:
             self.fscore_eval_metrics.count_fscore()
 

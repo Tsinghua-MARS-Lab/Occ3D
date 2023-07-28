@@ -144,5 +144,5 @@ build/
 data/
 output/
 work_dirs
-ckpts
+ckpts/
 

@@ -18,7 +18,5 @@ from .voxel_encoder import VoxelFormerEncoder,VoxelFormerLayer
 from .vol_encoder import VolFormerEncoder,VolFormerLayer
 from .pyramid_transformer import PyramidTransformer
 from .occ_transformer_heavy_decoder import OccTransformerHeavyDecoder
-from .view_transformer_occ import LSSViewTransformerOcc
 from .resnet import CustomResNet
 from .lss_fpn import FPN_LSS
-from .view_transformer_occ_waymo import LSSViewTransformerOccWaymo

@@ -16,9 +16,9 @@ import numpy as np
 import mmdet3d
 from projects.mmdet3d_plugin.models.utils.bricks import run_time
 
-from san import tools as san_tools
-from detectron2.engine import DefaultTrainer
-from detectron2.checkpoint import DetectionCheckpointer
+# from san import tools as san_tools
+# from detectron2.engine import DefaultTrainer
+# from detectron2.checkpoint import DetectionCheckpointer
 
 @DETECTORS.register_module()
 class OccFormerWaymo(MVXTwoStageDetector):
@@ -67,22 +67,22 @@ class OccFormerWaymo(MVXTwoStageDetector):
             'prev_angle': 0,
         }
 
-        if clip_backbone is not None:
-            assert img_backbone is None
-            clip_config = clip_backbone['config_file']
-            clip_model_path = clip_backbone['model_path']
-            clip_model_path = clip_backbone['model_path']
+        # if clip_backbone is not None:
+        #     assert img_backbone is None
+        #     clip_config = clip_backbone['config_file']
+        #     clip_model_path = clip_backbone['model_path']
+        #     clip_model_path = clip_backbone['model_path']
 
-            clip_cfg = san_tools.setup(clip_config)
-            clip_backbone = DefaultTrainer.build_model(clip_cfg)
-            if clip_model_path.startswith("huggingface:"):
-                clip_model_path = san_tools.download_model(clip_model_path)
-            print("Loading model from: ", clip_model_path)
-            DetectionCheckpointer(clip_backbone, save_dir=clip_cfg.OUTPUT_DIR).resume_or_load(
-                clip_model_path
-            )
-            clip_backbone.eval()
-            self.img_backbone = clip_backbone
+        #     clip_cfg = san_tools.setup(clip_config)
+        #     clip_backbone = DefaultTrainer.build_model(clip_cfg)
+        #     if clip_model_path.startswith("huggingface:"):
+        #         clip_model_path = san_tools.download_model(clip_model_path)
+        #     print("Loading model from: ", clip_model_path)
+        #     DetectionCheckpointer(clip_backbone, save_dir=clip_cfg.OUTPUT_DIR).resume_or_load(
+        #         clip_model_path
+        #     )
+        #     clip_backbone.eval()
+        #     self.img_backbone = clip_backbone
 
     def extract_img_feat(self, img, img_metas, len_queue=None):
         """Extract features of images."""

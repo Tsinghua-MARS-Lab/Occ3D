@@ -10,4 +10,4 @@ from .models.utils import *
 from .models.opt.adamw import AdamW2
 from .bevformer import *
 from .models.necks import CustomFPN
-from .models.necks import LSSViewTransformer
+# from .models.necks import LSSViewTransformer

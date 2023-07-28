@@ -6,7 +6,7 @@ import torch
 from mmcv.utils import print_log
 from os import path as osp
 # ERROR ROOT at LINE 331, AT line 236 in format_result, we adjust the worker to be really small
-from mmdet3d.datasets import DATASETS #really fucked up for not adding '3d'
+from mmdet3d.datasets import DATASETS 
 from mmdet3d.core.bbox import Box3DMode, points_cam2img
 from mmdet3d.datasets.kitti_dataset import KittiDataset
 # from .waymo_let_metric import compute_waymo_let_metric
@@ -210,9 +210,7 @@ class CustomWaymoDataset(KittiDataset):
         assert ('waymo' in data_format or 'kitti' in data_format), \
             f'invalid data_format {data_format}'
         print("still work before format_results ---  if not isinstance")
-        # np.save('debug_eval/zltwaymo_eval_result_before_format_results',outputs)
-        # print('saved!')
-        # exit(0)
+
         if (not isinstance(outputs[0], dict)) or 'img_bbox' in outputs[00]:
             raise TypeError('Not supported type for reformat results.')
         elif 'pts_bbox' in outputs[0]:#we go this way
@@ -232,11 +230,6 @@ class CustomWaymoDataset(KittiDataset):
             result_files = self.bbox2result_kitti(outputs, self.CLASSES,
                                                   pklfile_prefix,
                                                   submission_prefix)
-        # print(result_files)
-        # np.save('debug_eval/zltwaymo_eval_result_kitti_format',result_files)## turn into cam-coord, it sucks
-        # exit(0)
-        # open('zlt_output_kitti_format_debug.txt','w').write(str(result_files))  #we got absolutely right data
-        # exit(0)  
         if 'waymo' in data_format:
             from .zlt_kitti2waymo import zlt_KITTI2Waymo as KITTI2Waymo
             waymo_root = osp.join(
@@ -255,7 +248,6 @@ class CustomWaymoDataset(KittiDataset):
             save_tmp_dir = tempfile.TemporaryDirectory()
             waymo_results_save_dir = save_tmp_dir.name
             waymo_results_final_path = f'{pklfile_prefix}.bin'
-            print("still work before converter init!!!")
             if 'pts_bbox' in result_files:#result_files deprecated
                 converter = KITTI2Waymo(result_files['pts_bbox'],
                                         waymo_tfrecords_dir,
@@ -264,12 +256,12 @@ class CustomWaymoDataset(KittiDataset):
             else:
                 converter = KITTI2Waymo(result_files, waymo_tfrecords_dir,
                                         waymo_results_save_dir,
-                                        waymo_results_final_path, prefix)# worker弄小一点看看行不行
-            print("still work before converter convert!!!")
+                                        waymo_results_final_path, prefix)
+
             print(waymo_tfrecords_dir, waymo_results_save_dir, waymo_results_final_path)
             # exit(0)
             converter.convert()         
-            print("still work after converter convert!!!")
+
             save_tmp_dir.cleanup()
 
         return result_files, tmp_dir
@@ -307,9 +299,7 @@ class CustomWaymoDataset(KittiDataset):
             dict[str: float]: results of each evaluation metric
         """
         print("metric here is-----------{}".format(metric))
-        # np.save('debug_eval/zltwaymo_eval_result',results)
-        # print('saved!')## result still correct here!
-        # exit(0)
+    
         assert ('waymo' in metric or 'kitti' in metric), \
             f'invalid metric {metric}'
 
@@ -325,7 +315,7 @@ class CustomWaymoDataset(KittiDataset):
                 results,
                 pklfile_prefix,
                 submission_prefix,
-                data_format='waymo')# xxxxxxx not found inside, maybe it's OK
+                data_format='waymo')
 
             import shutil
             shutil.copy(f'{pklfile_prefix}.bin', 'work_dirs/result.bin')
@@ -376,9 +366,7 @@ class CustomWaymoDataset(KittiDataset):
             dict[str: float]: results of each evaluation metric
         """
         print("metric here is-----------{}".format(metric))
-        # np.save('debug_eval/zltwaymo_eval_result',results)
-        # print('saved!')## result still correct here!
-        # exit(0)
+
         assert ('waymo' in metric or 'kitti' in metric), \
             f'invalid metric {metric}'
 
@@ -386,7 +374,7 @@ class CustomWaymoDataset(KittiDataset):
 
             from time import time
             _ = time()
-            ap_dict = None# compute_waymo_let_metric(f'data/waymo/waymo_format/gt.bin', 'work_dirs/result.bin')
+            ap_dict = None
             print('time usage of compute_let_metric: {} s'.format(time() - _))
 
         return ap_dict
@@ -420,14 +408,11 @@ class CustomWaymoDataset(KittiDataset):
         for idx, pred_dicts in enumerate(
                 mmcv.track_iter_progress(net_outputs)):
             annos = []
-            info = self.data_infos[idx]     # 所以我们output是stack起来的，哦因为你eval肯定不需要做random shuffle啊。。。idx直接能对上，所以output不用存
+            info = self.data_infos[idx]     
             sample_idx = info['image']['image_idx']
             image_shape = info['image']['image_shape'][:2]
-            # if you are going to replace final result.bin with gt boxes, do it here
             box_dict = self.convert_valid_bboxes(pred_dicts, info)
-            # np.save('debug_eval/zltwaymo_box_dict',box_dict)
-            # print(box_dict)
-            # exit(0)
+           
             if len(box_dict['bbox']) > 0:
                 box_2d_preds = box_dict['bbox']
                 box_preds = box_dict['box3d_camera']
@@ -532,12 +517,11 @@ class CustomWaymoDataset(KittiDataset):
                 - label_preds (np.ndarray): Class labels of predicted boxes.
                 - sample_idx (np.ndarray): Sample index.
         """
-        # TODO: refactor this function
+
         box_preds = box_dict['boxes_3d']
         scores = box_dict['scores_3d']
         labels = box_dict['labels_3d']
         sample_idx = info['image']['image_idx']
-        # TODO: remove the hack of yaw
         box_preds.limit_yaw(offset=0.5, period=np.pi * 2)
 
         if len(box_preds) == 0:
@@ -552,9 +536,9 @@ class CustomWaymoDataset(KittiDataset):
         rect = info['calib']['R0_rect'].astype(np.float32)
         Trv2c = info['calib']['Tr_velo_to_cam'].astype(np.float32)
         P0 = info['calib']['P0'].astype(np.float32)
-        P0 = box_preds.tensor.new_tensor(P0)    # that is to say, box_2d_pred only projected to cam0 image！
+        P0 = box_preds.tensor.new_tensor(P0)    
 
-        box_preds_camera = box_preds.convert_to(Box3DMode.CAM, rect @ Trv2c) #box3d in camera coord
+        box_preds_camera = box_preds.convert_to(Box3DMode.CAM, rect @ Trv2c) 
 
         box_corners = box_preds_camera.corners
         box_corners_in_image = points_cam2img(box_corners, P0)
@@ -562,8 +546,7 @@ class CustomWaymoDataset(KittiDataset):
         minxy = torch.min(box_corners_in_image, dim=1)[0]
         maxxy = torch.max(box_corners_in_image, dim=1)[0]
         box_2d_preds = torch.cat([minxy, maxxy], dim=1)
-        # Post-processing
-        # check box_preds
+        
         limit_range = box_preds.tensor.new_tensor(self.pcd_limit_range)
         valid_pcd_inds = ((box_preds.center > limit_range[:3]) &
                           (box_preds.center < limit_range[3:]))

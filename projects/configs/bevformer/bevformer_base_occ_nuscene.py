@@ -135,29 +135,6 @@ model = dict(
             max_num=300,
             voxel_size=voxel_size,
             num_classes=10),
-            # decoder=dict(
-            #     type='DetectionTransformerDecoder',
-            #     num_layers=6,
-            #     return_intermediate=True,
-            #     transformerlayers=dict(
-            #         type='DetrTransformerDecoderLayer',
-            #         attn_cfgs=[
-            #             dict(
-            #                 type='MultiheadAttention',
-            #                 embed_dims=_dim_,
-            #                 num_heads=8,
-            #                 dropout=0.1),
-            #              dict(
-            #                 type='CustomMSDeformableAttention',
-            #                 embed_dims=_dim_,
-            #                 num_levels=1),
-            #         ],
-            #
-            #         feedforward_channels=_ffn_dim_,
-            #         ffn_dropout=0.1,
-            #         operation_order=('self_attn', 'norm', 'cross_attn', 'norm',
-            #                          'ffn', 'norm')))),
-
 
         loss_cls=dict(
             type='FocalLoss',
@@ -181,9 +158,9 @@ model = dict(
             pc_range=point_cloud_range))))
 
 dataset_type = 'NuSceneOcc'
-data_root = 'data/occ/'
+data_root = 'data/occ3d-nus/'
 file_client_args = dict(backend='disk')
-occ_gt_data_root='data/occ'
+occ_gt_data_root='data/occ3d-nus'
 
 train_pipeline = [
     dict(type='LoadMultiViewImageFromFiles', to_float32=True),
@@ -218,7 +195,7 @@ test_pipeline = [
 
 data = dict(
     samples_per_gpu=1,
-    workers_per_gpu=4,
+    workers_per_gpu=0,
     train=dict(
         type=dataset_type,
         data_root=data_root,

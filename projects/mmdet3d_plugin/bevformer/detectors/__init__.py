@@ -4,5 +4,3 @@ from .bevformer_fp16 import BEVFormer_fp16
 from .occformer_waymo import OccFormerWaymo
 from .occformer_hybrid import OccFormerHybrid
 from .occformer_bevdet_ver import OccformerBevdetVer
-from .bevdet_occ import BEVDetOcc
-from .bevdet_occ_waymo import BEVDetOccWaymo
