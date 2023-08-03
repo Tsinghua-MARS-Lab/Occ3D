@@ -56,7 +56,7 @@ cd ckpts & wget https://github.com/zhiqi-li/storage/releases/download/v1.0/r101_
 
 ## Preparing Dataset
 
-# eval
+## Training and Evaluation
 ## single machine
 ```sh
 ./tools/dist_test.sh projects/configs/bevformer/bevformer_base_occ_waymo.py work_dirs/bevformer_base_occ_waymo/latest.pth 8 --eval mIoU
