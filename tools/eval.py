@@ -12,6 +12,7 @@ from termcolor import colored
 from pathlib import Path
 from copy import deepcopy
 from functools import reduce
+import argparse
 
 np.seterr(divide='ignore', invalid='ignore')
 os.environ["KMP_DUPLICATE_LIB_OK"]  =  "TRUE"
@@ -351,8 +352,11 @@ def eval_nuscenes_f1_score(gt_path, pred_path):
     metric = f1_score()
 
 if __name__ == '__main__':
-    gt_path="/home/txy/bev-occ/data/occ-trainval/gts/"
-    pred_path="work_dirs/bevformer_base_occ_conv3d_3dvolume/results/"
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--gt_path', help='path to gt voxels')
+    parser.add_argument('--pred_path', help='path to gt voxels')
+    args = parser.parse_args()
+    
     # eval_nuscene(gt_path, pred_path)
-    eval_nuscenes_f1_score(gt_path, pred_path)
+    eval_nuscenes_f1_score(args.gt_path, args.pred_path)
     

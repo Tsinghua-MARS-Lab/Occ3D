@@ -56,47 +56,52 @@ cd ckpts & wget https://github.com/zhiqi-li/storage/releases/download/v1.0/r101_
 
 ## Preparing Dataset
 
-# eval
-## single machine
-```sh
-./tools/dist_test.sh projects/configs/bevformer/bevformer_base_occ_waymo.py work_dirs/bevformer_base_occ_waymo/latest.pth 8 --eval mIoU
-```
-## multi machine
-```sh
-GPUS=8 ./tools/slurm_test.sh brie1 test projects/configs/bevformer/bevformer_base_occ_waymo.py work_dirs/bevformer_base_occ_waymo/latest.pth --eval mIoU
-```
+## Training & Evaluation
 
-# save results
-```sh
-./tools/dist_test.sh projects/configs/bevformer/bevformer_base_occ_waymo.py work_dirs/bevformer_base_occ_waymo/latest.pth 8 --out work_dirs/bevformer_base_occ_waymo/results.pkl
-```
+### Training
 
-# train
-## single GPU
-```sh
-./tools/dist_train.sh projects/configs/bevformer/bevformer_base_occ_waymo.py 1
+**a. Single GPU training.**
+```sh 
+./tools/dist_train.sh ${PATH_TO_CONFIG} 1
 ```
-## single machine
-```sh
-./tools/dist_train.sh projects/configs/bevformer/bevformer_base_occ_waymo.py 8
+**b. Single machine training.**
+```sh 
+./tools/dist_train.sh ${PATH_TO_CONFIG} 8
 ```
-## multi machine
-```sh
-NNODES=4 NODE_RANK=0 PORT=2850 MASTER_ADDR=10.200.5.154 ./tools/my_dist_train.sh projects/configs/bevformer/bevformer_base_occ_conv3d_waymo.py 8
+**c. Multi machine training.**
+```sh 
+NNODES=${NUMS_NODES} NODE_RANK=0 PORT=${PORT} MASTER_ADDR=10.200.5.154 ./tools/my_dist_train.sh ${PATH_TO_CONFIG} 8
 ```
 or
 ```sh
-GPUS=32 ./tools/slurm_train.sh brie1 test projects/configs/bevformer/bevformer_base_occ_conv3d_waymo.py
+GPUS=${NUM_GPUS} ./tools/slurm_train.sh brie1 test ${PATH_TO_CONFIG}
 ```
 
-# vis
+### Eval
+**a. Single machine evaluation.**
 ```sh
-python vis_preds.py
+./tools/dist_test.sh ${PATH_TO_CONFIG} ${PATH_TO_WEIGHTS} 8 --eval mIoU
+```
+**b. Multi machine evaluation.**
+```sh
+GPUS=${NUM_GPUS} ./tools/slurm_test.sh brie1 test ${PATH_TO_CONFIG} ${PATH_TO_WEIGHTS} --eval mIoU
 ```
 
-# custom eval
+**c. Saving evalutaion results.**
 ```sh
-python tools/eval_waymo.py # waymo
+./tools/dist_test.sh ${PATH_TO_CONFIG} ${PATH_TO_WEIGHTS} 8 --out ${PATH_TO_SAVE}
+```
+
+
+
+## Visualize prediction results
+```sh
+python vis_preds.py --file_path ${PATH_TO_SAVE}
+```
+
+# Custom evaluation scripts
+```sh
+python tools/eval_waymo.py --gt_path ${PATH_TO_GT_VOXELS} --pred_path ${PATH_TO_PRED_VOXELS} # waymo
 or 
-python tools/eval.py # nuscene
+python tools/eval.py --gt_path ${PATH_TO_GT_VOXELS} --pred_path ${PATH_TO_PRED_VOXELS} # nuscene
 ```

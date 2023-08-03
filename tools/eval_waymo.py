@@ -412,8 +412,10 @@ def eval_nuscenes_f1_score(gt_path, pred_path):
     metric = f1_score()
 
 if __name__ == '__main__':
-    gt_path=""
-    pred_path="work_dirs/bevdet-r101-waymo/results_epoch24/"
-    eval_nuscene(gt_path, pred_path)
-    eval_nuscenes_f1_score(gt_path, pred_path)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--gt_path', help='path to gt voxels')
+    parser.add_argument('--pred_path', help='path to gt voxels')
+    args = parser.parse_args()
+    eval_nuscene(args.gt_path, args.pred_path)
+    eval_nuscenes_f1_score(args.gt_path, args.pred_path)
     

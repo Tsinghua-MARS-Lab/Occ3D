@@ -2,7 +2,7 @@ import os
 import pickle as pkl
 import numpy as np
 import torch
-
+import argparse
 from tools import vis_occ
 
 VOXEL_SIZE=[0.1, 0.1, 0.2]
@@ -15,10 +15,12 @@ FREE_LABEL = 23
 
 
 if __name__ == "__main__":
-    file = "work_dirs/bevformer_base_occ_waymo/results.pkl"
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--file_path', help='path to saved results')
+    args = parser.parse_args()
     interval = 10
     voxel_size = TGT_VOXEL_SIZE
-    with open(file ,'rb') as f:
+    with open(args.file_path ,'rb') as f:
         results = pkl.load(f)
     
     for result in results[::interval]:
@@ -34,11 +36,6 @@ if __name__ == "__main__":
         mask_lidar = np.squeeze(mask_lidar, axis=0)
         mask_camera = np.squeeze(mask_camera, axis=0)
 
-        # ignore_labels = [FREE_LABEL]
-        # mask = np.zeros_like(voxel_semantics, dtype=np.bool)
-        # for ignore_label in ignore_labels:
-        #     mask = np.logical_or(voxel_semantics == ignore_label, mask)
-        # mask = np.logical_not(mask)
         voxel_label_vis = voxel_semantics
         voxel_show = np.logical_and(mask_camera, voxel_semantics!=FREE_LABEL)
         vis = vis_occ.main(torch.from_numpy(voxel_label_vis), torch.from_numpy(voxel_show), voxel_size=voxel_size, vis=None,
@@ -56,6 +53,5 @@ if __name__ == "__main__":
         vis.run()
         vis.poll_events()
         vis.update_renderer()
-        # vis.capture_screen_image(f'output/ray.jpg')
 
         del vis
