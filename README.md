@@ -56,7 +56,7 @@ cd ckpts & wget https://github.com/zhiqi-li/storage/releases/download/v1.0/r101_
 
 ## Preparing Dataset
 
-## Training and Evaluation
+# eval
 ## single machine
 ```sh
 ./tools/dist_test.sh projects/configs/bevformer/bevformer_base_occ_waymo.py work_dirs/bevformer_base_occ_waymo/latest.pth 8 --eval mIoU
@@ -90,15 +90,13 @@ GPUS=32 ./tools/slurm_train.sh brie1 test projects/configs/bevformer/bevformer_b
 ```
 
 # vis
-./tools/dist_test.sh projects/configs/bevformer/bevformer_base_occ_waymo.py work_dirs/bevformer_base_occ_waymo/epoch_5.pth 8 --eval mAP
-amend projects/mmdet3d_plugin/bevformer/detectors/occformer_waymo.py
-    DEBUG=True
-    print('output',type(occ_results),type(voxel_semantics[0]),type(img_metas[0]))
-    save_root = '/home/txy/bev-occ/work_dirs/bevformer_base_occ_waymo/results/'
-
+```sh
 python vis_preds.py
+```
 
-# eval waymo
-python tools/eval_waymo.py
-# eval nuscene
-python tools/eval.py
+# custom eval
+```sh
+python tools/eval_waymo.py # waymo
+or 
+python tools/eval.py # nuscene
+```
