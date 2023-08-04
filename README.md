@@ -99,7 +99,7 @@ GPUS=${NUM_GPUS} ./tools/slurm_test.sh brie1 test ${PATH_TO_CONFIG} ${PATH_TO_WE
 python vis_preds.py --file_path ${PATH_TO_SAVE}
 ```
 
-# Custom evaluation scripts
+## Custom evaluation scripts
 ```sh
 python tools/eval_waymo.py --gt_path ${PATH_TO_GT_VOXELS} --pred_path ${PATH_TO_PRED_VOXELS} # waymo
 or 
