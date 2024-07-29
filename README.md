@@ -18,6 +18,7 @@
 </div>
 
 ## News
+- [2024/07]: More datasets and baseline code are available at [CVT-Occ](https://github.com/Tsinghua-MARS-Lab/CVT-Occ).
 - [2023/08]: The CTF-Occ and several baseline models have been released for both Nuscene and Waymo dataset by [Yucheng Mao](https://github.com/myc634).
 - [2023/06]: The preprint version is available on [arXiv](https://arxiv.org/abs/2304.14365).
 
