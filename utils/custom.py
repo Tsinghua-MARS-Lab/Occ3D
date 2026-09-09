@@ -36,7 +36,7 @@ def sparse2dense(
     voxel_size_numpy = np.asarray(voxel_size)
     point_cloud_range_numpy = np.asarray(point_cloud_range)
     sparse_shape_numpy = np.asarray(sparse_shape)
-    assert np.alltrue(voxel_size_numpy * sparse_shape_numpy[::-1] == point_cloud_range_numpy[3:6] - point_cloud_range_numpy[:3])
+    assert np.true(voxel_size_numpy * sparse_shape_numpy[::-1] == point_cloud_range_numpy[3:6] - point_cloud_range_numpy[:3])
     _device = points.device
     voxel_size_device = torch.tensor(voxel_size).to(_device)
     point_cloud_range_device = torch.tensor(point_cloud_range).to(_device)
